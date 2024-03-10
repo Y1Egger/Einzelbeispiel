@@ -1,7 +1,5 @@
 package com.example.einzelbeispiel;
 
-import android.annotation.SuppressLint;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -15,7 +13,6 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import java.io.BufferedReader;
-import java.io.DataOutput;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -50,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 matNr = editTxt.getText().toString();
-                new NetworkCallTask().execute(matNr);
+                onClickConnect(matNr);
             }
         });
 
@@ -96,31 +93,32 @@ public class MainActivity extends AppCompatActivity {
         return sum;
     }//calculate
 
-    public class NetworkCallTask extends AsyncTask<String, Void, String>{
-        @Override
-        protected String doInBackground(String... strings) {
-            try {
-                Socket socket = new Socket(serverName, serverPort);
+    public void onClickConnect(String ... strings){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Socket socket = new Socket(serverName, serverPort);
 
-                DataOutputStream out = new DataOutputStream(socket.getOutputStream());
-                BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                    DataOutputStream out = new DataOutputStream(socket.getOutputStream());
+                    BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
-                out.writeBytes(strings[0] + "\n");
-                out.flush();
+                    out.writeBytes(strings[0] + "\n");
+                    out.flush();
 
-                messageReceived = in.readLine();
-                socket.close();
+                    messageReceived = in.readLine();
+                    socket.close();
 
-            } catch (IOException e) {
-                throw new RuntimeException(e);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        txt.setText(messageReceived);
+                    }
+                });
             }
-
-            return messageReceived;
-        }
-
-        protected void onPostExecute(String messageReceived) {
-            txt.setText(messageReceived);
-        }
-
-    }//NetworkCallTask
+        }).start();
+    }//onClickConnect
 }//main
