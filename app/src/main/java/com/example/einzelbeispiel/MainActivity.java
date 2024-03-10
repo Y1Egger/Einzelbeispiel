@@ -1,5 +1,6 @@
 package com.example.einzelbeispiel;
 
+import android.annotation.SuppressLint;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
@@ -27,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
     private EditText editTxt;
     private TextView txt;
-    private Button btn;
+    private Button btn, btn2;
 
     String matNr;
     String messageReceived = "";
@@ -39,8 +40,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         editTxt = findViewById(R.id.editTextNumber);
+
         txt = findViewById(R.id.textView);
+
         btn = findViewById(R.id.button);
+        btn2 = findViewById(R.id.button2);
 
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,12 +54,28 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        btn2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                matNr = editTxt.getText().toString();
+                result(matNr);
+            }
+        });
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
     }//onCreate
+
+    public void result(String matNr){
+
+    }//result
+
+    public int calculate(String matNr){
+        return 0;
+    }//calculate
 
     public class NetworkCallTask extends AsyncTask<String, Void, String>{
         @Override
@@ -82,5 +102,6 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(String messageReceived) {
             txt.setText(messageReceived);
         }
-    }
+
+    }//NetworkCallTask
 }//main
