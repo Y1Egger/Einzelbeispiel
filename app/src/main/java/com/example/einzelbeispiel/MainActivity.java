@@ -70,10 +70,17 @@ public class MainActivity extends AppCompatActivity {
     }//onCreate
 
     public void result(String matNr){
-        txt.setText(calculate(matNr));
+        int sum = calculate(matNr);
+        String parity = "ungerade";
+
+        if (sum % 2 == 0){
+            parity = "gerade";
+        }
+
+        txt.setText("Summe: " + sum + " " + parity);
     }//result
 
-    public String calculate(String matNr){
+    public int calculate(String matNr){
         int sum = 0;
 
         for (int i = matNr.length() - 1; i>=0; i--){
@@ -82,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
             sum = sum + nr;
         }
 
-        return String.valueOf(sum);
+        return sum;
     }//calculate
 
     public class NetworkCallTask extends AsyncTask<String, Void, String>{
