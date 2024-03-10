@@ -70,11 +70,19 @@ public class MainActivity extends AppCompatActivity {
     }//onCreate
 
     public void result(String matNr){
-
+        txt.setText(calculate(matNr));
     }//result
 
-    public int calculate(String matNr){
-        return 0;
+    public String calculate(String matNr){
+        int sum = 0;
+
+        for (int i = matNr.length() - 1; i>=0; i--){
+            int nr = Character.getNumericValue(matNr.charAt(i));
+
+            sum = sum + nr;
+        }
+
+        return String.valueOf(sum);
     }//calculate
 
     public class NetworkCallTask extends AsyncTask<String, Void, String>{
