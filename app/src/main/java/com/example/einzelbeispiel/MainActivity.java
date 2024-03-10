@@ -77,16 +77,20 @@ public class MainActivity extends AppCompatActivity {
             parity = "gerade";
         }
 
-        txt.setText("Summe: " + sum + " " + parity);
+        txt.setText("Summe: " + sum + "\nDiese Zahl ist " + parity + ".");
     }//result
 
     public int calculate(String matNr){
         int sum = 0;
 
-        for (int i = matNr.length() - 1; i>=0; i--){
+        for (int i = 0; i <= matNr.length()-1; i++){
             int nr = Character.getNumericValue(matNr.charAt(i));
 
-            sum = sum + nr;
+            if(i % 2 == 0){
+                sum = sum + nr;
+            }else{
+                sum = sum - nr;
+            }
         }
 
         return sum;
