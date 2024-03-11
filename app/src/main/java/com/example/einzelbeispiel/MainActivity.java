@@ -12,6 +12,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -43,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
         btn = findViewById(R.id.button);
         btn2 = findViewById(R.id.button2);
 
+        //button server connection
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -51,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //button calculation
         btn2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -66,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }//onCreate
 
+    //parity check + output
     public void result(String matNr){
         int sum = calculate(matNr);
         String parity = "ungerade";
@@ -77,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
         txt.setText("Summe: " + sum + "\nDiese Zahl ist " + parity + ".");
     }//result
 
+    //alternating cross-sum
     public int calculate(String matNr){
         int sum = 0;
 
@@ -93,6 +98,7 @@ public class MainActivity extends AppCompatActivity {
         return sum;
     }//calculate
 
+    //server connection
     public void onClickConnect(String ... strings){
         new Thread(new Runnable() {
             @Override
